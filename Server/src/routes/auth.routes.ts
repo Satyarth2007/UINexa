@@ -1,18 +1,15 @@
-
 import { Router } from "express";
-import {
-  getMe,
-  login,
-  logout,
-  register,
-} from "../controllers/auth.controller";
-import { requireAuth } from "../middleware/auth.middleware";
+import { login, logout, me, register } from "../controllers/auth.controller";
+import { authenticate } from "../middleware/authenticate";
+import { loginLimiter, registerLimiter } from "../middleware/rateLimit";
+import { validate } from "../middleware/validate";
+import { loginSchema, registerSchema } from "../validators/auth.schema";
 
 const router = Router();
 
-router.post("/register", register);
-router.post("/login", login);
+router.post("/register", registerLimiter, validate(registerSchema), register);
+router.post("/login", loginLimiter, validate(loginSchema), login);
 router.post("/logout", logout);
-router.get("/me", requireAuth, getMe);
+router.get("/me", authenticate, me);
 
 export default router;
