@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
+import GeneratePage from "../pages/GeneratePage"; // NEW
 import NotFound from "../pages/NotFound";
 
 export const router = createBrowserRouter([
@@ -20,7 +21,10 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <ProtectedRoute />,
-        children: [{ path: "/dashboard", element: <Dashboard /> }],
+        children: [
+          { path: "/dashboard", element: <Dashboard /> },
+          { path: "/dashboard/generate", element: <GeneratePage /> }, // NEW
+        ],
       },
       { path: "*", element: <NotFound /> },
     ],

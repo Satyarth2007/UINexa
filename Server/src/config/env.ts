@@ -10,6 +10,10 @@ const schema = z.object({
   CLIENT_URL: z.url(),
   JWT_SECRET: z.string().min(32, "must be at least 32 characters"),
   JWT_EXPIRES_IN: z.string().default("7d"),
+  LLM_PROVIDER: z.enum(["gemini"]).default("gemini"),
+  LLM_API_KEY: z.string().min(10),
+  LLM_MODEL: z.string().min(1),
+  LLM_FALLBACK_MODELS: z.string().optional(),
 });
 
 const parsed = schema.safeParse(process.env);
